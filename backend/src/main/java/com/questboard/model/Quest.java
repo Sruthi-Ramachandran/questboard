@@ -44,6 +44,35 @@ public class Quest {
         this.xpReward = xpReward;
     }
 
+    public boolean complete() {
+        if (completed) {
+            return false;
+        }
+
+        completed = true;
+        return true;
+    }
+    public void updateDetails(
+            String title,
+            String description,
+            QuestCategory category,
+            QuestDifficulty difficulty
+    ) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+
+        // Only active quests can change difficulty and XP
+        if (!this.completed) {
+            this.difficulty = difficulty;
+
+            this.xpReward = switch (difficulty) {
+                case EASY -> 10;
+                case MEDIUM -> 25;
+                case HARD -> 50;
+            };
+        }
+    }
     public Long getId() { return id; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
